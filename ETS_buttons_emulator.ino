@@ -1,3 +1,6 @@
+#include <Keyboard.h>
+
+
 const int buttonPin8 = 8;     // the number of the pushbutton pin
 
 // variables will change:
@@ -8,6 +11,7 @@ void setup() {
   Serial.begin(9600);
   // initialize the pushbutton pin as an input:
   pinMode(buttonPin8, INPUT);
+  Keyboard.begin();
 }
 void loop() {
   // read the state of the pushbutton value:
@@ -15,10 +19,14 @@ void loop() {
   // Show the state of pushbutton on serial monitor
   Serial.println(button8State);
   // check if the pushbutton is pressed.
+  
   // if it is, the buttonState is HIGH:
   if (button8State == HIGH) {
     // turn LED on:
     Serial.println("button 8 on");
+    Keyboard.press('n');
+    delay(100);
+    Keyboard.releaseAll();
   }
  
   // Added the delay so that we can see the output of button
