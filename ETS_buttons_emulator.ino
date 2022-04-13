@@ -4,6 +4,16 @@
 
 LiquidCrystal_I2C lcd(0x27,20,4);  // set the LCD address to 0x27 for a 16 chars and 2 line display
 
+byte Heart[8] = {
+0b00000,
+0b01010,
+0b11111,
+0b11111,
+0b01110,
+0b00100,
+0b00000,
+0b00000
+};
 
 const int buttonPin8 = 8;     // the number of the pushbutton pin
 
@@ -18,13 +28,27 @@ void setup() {
   Keyboard.begin();
 
   lcd.init();                      // initialize the lcd 
-  lcd.init();
   // Print a message to the LCD.
   lcd.backlight();
   lcd.setCursor(0,0);
   lcd.print("konichiwaa");
+  
+  lcd.createChar(0, Heart);
+  lcd.setCursor(11,0);
+  lcd.write(byte(0));
+  
+  delay(2000);
+
+  lcd.setCursor(2,0);
+  lcd.print("Please wait");
+  
+  lcd.clear();   
 }
 void loop() {
+  lcd.setCursor(2,0);
+  lcd.print("Ignition ON");
+  lcd.setCursor(3,1);
+  lcd.print("Engine ON");
   /*
   // read the state of the pushbutton value:
   
