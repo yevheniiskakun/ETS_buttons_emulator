@@ -1,4 +1,8 @@
 #include <Keyboard.h>
+#include <Wire.h> 
+#include <LiquidCrystal_I2C.h>
+
+LiquidCrystal_I2C lcd(0x27,20,4);  // set the LCD address to 0x27 for a 16 chars and 2 line display
 
 
 const int buttonPin8 = 8;     // the number of the pushbutton pin
@@ -12,8 +16,16 @@ void setup() {
   // initialize the pushbutton pin as an input:
   pinMode(buttonPin8, INPUT);
   Keyboard.begin();
+
+  lcd.init();                      // initialize the lcd 
+  lcd.init();
+  // Print a message to the LCD.
+  lcd.backlight();
+  lcd.setCursor(0,0);
+  lcd.print("konichiwaa");
 }
 void loop() {
+  /*
   // read the state of the pushbutton value:
   
   button8State = digitalRead(buttonPin8);
@@ -27,6 +39,6 @@ void loop() {
     delay(500);
     
   }
- 
-  // Added the delay so that we can see the output of button
+ */
+
 }
