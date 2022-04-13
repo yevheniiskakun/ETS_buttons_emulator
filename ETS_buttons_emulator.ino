@@ -31,17 +31,30 @@ void setup() {
   // Print a message to the LCD.
   lcd.backlight();
   lcd.setCursor(0,0);
-  lcd.print("konichiwaa");
+  lcd.print("Konichiwaa");
   
   lcd.createChar(0, Heart);
   lcd.setCursor(11,0);
   lcd.write(byte(0));
-  
   delay(2000);
+  lcd.clear(); 
+  
 
   lcd.setCursor(2,0);
   lcd.print("Please wait");
-  
+  for(int i = 0; i <= 16; i++){
+    lcd.setCursor(i,1);
+    lcd.print("-");
+    delay(500);
+  }
+  lcd.clear(); 
+  lcd.setCursor(4,0);
+  lcd.print("Done");
+  delay(2000);
+  lcd.clear(); 
+  lcd.setCursor(1,0);
+  lcd.print("Enjoy the ride");
+  delay(3000);
   lcd.clear();   
 }
 void loop() {
