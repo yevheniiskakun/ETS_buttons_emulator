@@ -2,6 +2,10 @@
 #include <Wire.h> 
 #include <LiquidCrystal_I2C.h>
 
+unsigned long actual_time = 0;
+unsigned long first_timer = 0;
+unsigned long second_timer = 0;
+
 int engine_status_flag = 0;
 
 LiquidCrystal_I2C lcd(0x27,20,4);  // set the LCD address to 0x27 for a 16 chars and 2 line display
@@ -24,42 +28,19 @@ int button8State = 0;         // variable for reading the pushbutton status
 
 
 void setup() {
+  actual_time = millis();
   //Serial.begin(9600);
   // initialize the pushbutton pin as an input:
   pinMode(buttonPin8, INPUT);
   Keyboard.begin();
 
   lcd.init();                      // initialize the lcd 
-  // Print a message to the LCD.
-  lcd.backlight();
-  lcd.setCursor(0,0);
-  lcd.print("Konichiwaa");
+  lcd.backlight();                  // turn on the backlight
   
-  lcd.createChar(0, Heart);
-  lcd.setCursor(11,0);
-  lcd.write(byte(0));
-  delay(2000);
-  lcd.clear(); 
-  
-
-  lcd.setCursor(2,0);
-  lcd.print("Please wait");
-  for(int i = 0; i <= 16; i++){
-    lcd.setCursor(i,1);
-    lcd.print("-");
-    delay(500);
-  }
-  lcd.clear(); 
-  lcd.setCursor(5,0);
-  lcd.print("Done");
-  delay(2000);
-  lcd.clear(); 
-  lcd.setCursor(1,0);
-  lcd.print("Enjoy the ride");
-  delay(3000);
-  lcd.clear();   
+  greeting();
 }
 void loop() {
+  actual_time = millis();
   // Read button state from 8 digital pin
   button8State = digitalRead(buttonPin8);
   
@@ -68,6 +49,8 @@ void loop() {
     lcd.print("Ignition ON");
     lcd.setCursor(3,1);
     lcd.print("Engine ON");
+    Keyboard.press('E');    // keyboard press
+    Keyboard.releaseAll();
     button8State = LOW;
     engine_status_flag = 1;
     delay(2000);
@@ -78,6 +61,8 @@ void loop() {
     lcd.print("Ignition OFF");
     lcd.setCursor(3,1);
     lcd.print("Engine OFF");
+    Keyboard.press('E');    // keyboard pressEE
+    Keyboard.releaseAll();
     button8State = LOW;
     engine_status_flag = 0;
     delay(2000);
@@ -101,7 +86,31 @@ void loop() {
 }
 
 void greeting(){
+  lcd.setCursor(0,0);
+  lcd.print("Konichiwaa");
   
+  lcd.createChar(0, Heart);
+  lcd.setCursor(11,0);
+  lcd.write(byte(0));
+  delay(2000);
+  lcd.clear(); 
+
+  lcd.setCursor(2,0);
+  lcd.print("Please wait");
+  for(int i = 0; i <= 16; i++){
+    lcd.setCursor(i,1);
+    lcd.print("-");
+    delay(500);
+  }
+  lcd.clear(); 
+  lcd.setCursor(5,0);
+  lcd.print("Done");
+  delay(2000);
+  lcd.clear(); 
+  lcd.setCursor(1,0);
+  lcd.print("Enjoy the ride");
+  delay(3000);
+  lcd.clear();   
 }
 
 void always_on_display(){
