@@ -2,6 +2,8 @@
 #include <Wire.h> 
 #include <LiquidCrystal_I2C.h>
 
+int engine_status_flag = 0;
+
 LiquidCrystal_I2C lcd(0x27,20,4);  // set the LCD address to 0x27 for a 16 chars and 2 line display
 
 byte Heart[8] = {
@@ -48,7 +50,7 @@ void setup() {
     delay(500);
   }
   lcd.clear(); 
-  lcd.setCursor(4,0);
+  lcd.setCursor(5,0);
   lcd.print("Done");
   delay(2000);
   lcd.clear(); 
@@ -58,14 +60,32 @@ void setup() {
   lcd.clear();   
 }
 void loop() {
-  lcd.setCursor(2,0);
-  lcd.print("Ignition ON");
-  lcd.setCursor(3,1);
-  lcd.print("Engine ON");
-  /*
-  // read the state of the pushbutton value:
-  
+  // Read button state from 8 digital pin
   button8State = digitalRead(buttonPin8);
+  
+  if (button8State == HIGH && engine_status_flag == 0) {
+    lcd.setCursor(2,0);
+    lcd.print("Ignition ON");
+    lcd.setCursor(3,1);
+    lcd.print("Engine ON");
+    button8State = LOW;
+    engine_status_flag = 1;
+    delay(2000);
+    lcd.clear();   
+  }
+  else if(button8State == HIGH && engine_status_flag == 1){
+    lcd.setCursor(2,0);
+    lcd.print("Ignition OFF");
+    lcd.setCursor(3,1);
+    lcd.print("Engine OFF");
+    button8State = LOW;
+    engine_status_flag = 0;
+    delay(2000);
+    lcd.clear(); 
+  }
+  /*
+  
+  
   // if it is, the buttonState is HIGH:
   if (button8State == HIGH) {
     // turn LED on:
@@ -78,4 +98,13 @@ void loop() {
   }
  */
 
+}
+
+void greeting(){
+  
+}
+
+void always_on_display(){
+
+  
 }
