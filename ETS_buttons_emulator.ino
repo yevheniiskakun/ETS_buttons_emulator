@@ -31,16 +31,16 @@ byte Heart[8] = {
 0b00000
 };
 
-byte Filled[8] =
+byte Lightning[8] =
 {
-0b11111,
-0b11111,
-0b11111,
-0b11111,
-0b11111,
-0b11111,
-0b11111,
-0b11111
+0b00001,
+0b00011,
+0b00110,
+0b01100,
+0b11110,
+0b00110,
+0b01100,
+0b11000
 };
 
      // the number of the pushbutton pin
@@ -92,7 +92,7 @@ void loop() {
     delay(2000);
     lcd.clear(); 
   }
-  
+  lcd.noCursor();
   always_on_display();
   
 }
@@ -129,14 +129,18 @@ void greeting(){
 
 void always_on_display(){
   stopwatch();
- 
+  if(engine_status_flag == 1){
+    lcd.createChar(1, Lightning);
+    lcd.setCursor(0,1);
+    lcd.write(byte(1));
+  }
 }
 
 void stopwatch(){
   if (actual_time - first_timer >= 1000UL) {
-    //Zapamietaj aktualny czas
-    first_timer = actual_time;
     
+    first_timer = actual_time;
+    // stopwatch section ----------
     if (seconds > 59){
       minutes++;
       seconds = 0;
@@ -148,13 +152,13 @@ void stopwatch(){
       lcd.clear();
     }
     seconds++;
-    // stopwatch location
-    lcd.setCursor(0,0);
+    // ----------
+    lcd.setCursor(0,0);  // stopwatch location
     lcd.print("Trip time: ");
     if(hours < 10){
       lcd.print("0");
     }
-    lcd.print(hours);
+    lcd.print(hours);   
     lcd.print(":");
     if(minutes < 10){
       lcd.print("0");
