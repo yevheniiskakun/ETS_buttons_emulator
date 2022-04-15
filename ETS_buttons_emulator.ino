@@ -67,6 +67,7 @@ void loop() {
   button8State = digitalRead(buttonPin8);
   
   if (button8State == HIGH && engine_status_flag == 0) {
+    lcd.clear();
     lcd.setCursor(2,0);
     lcd.print("Ignition ON");
     lcd.setCursor(3,1);
@@ -79,6 +80,7 @@ void loop() {
     lcd.clear();   
   }
   else if(button8State == HIGH && engine_status_flag == 1){
+    lcd.clear();
     lcd.setCursor(2,0);
     lcd.print("Ignition OFF");
     lcd.setCursor(3,1);
@@ -126,10 +128,10 @@ void greeting(){
 }
 
 void always_on_display(){
-  //stopwatch();
-  lcd.clear();
+  stopwatch();
+ 
 }
-/*
+
 void stopwatch(){
   if (actual_time - first_timer >= 1000UL) {
     //Zapamietaj aktualny czas
@@ -146,11 +148,18 @@ void stopwatch(){
       lcd.clear();
     }
     seconds++;
-    lcd.setCursor(1,0);
+    // stopwatch location
+    lcd.setCursor(0,0);
+    lcd.print("Trip time: ");
+    if(hours < 10){
+      lcd.print("0");
+    }
     lcd.print(hours);
     lcd.print(":");
+    if(minutes < 10){
+      lcd.print("0");
+    }
     lcd.print(minutes);
   }
   
 }
-*/
